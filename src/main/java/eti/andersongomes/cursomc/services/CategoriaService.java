@@ -2,8 +2,10 @@ package eti.andersongomes.cursomc.services;
 
 import eti.andersongomes.cursomc.domain.Categoria;
 import eti.andersongomes.cursomc.repositories.CategoriaRepository;
+import eti.andersongomes.cursomc.services.exceptions.DataIntegrityException;
 import eti.andersongomes.cursomc.services.exceptions.ObjectNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -28,5 +30,15 @@ public class CategoriaService {
     public Categoria update(Categoria categoria) {
         find(categoria.getId());
         return repo.save(categoria);
+    }
+
+    public void delete(Integer id) {
+        find(id);
+        try {
+            repo.delete(id);
+        }catch (DataIntegrityViolationException e){
+            throw new DataIntegrityException("Não é possivel excluir uma categoria que tenha produtos");
+        }
+
     }
 }

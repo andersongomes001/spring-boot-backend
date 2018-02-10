@@ -1,5 +1,7 @@
 package eti.andersongomes.cursomc.resources.exception;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 import java.io.Serializable;
 
 public class StandardError implements Serializable {
