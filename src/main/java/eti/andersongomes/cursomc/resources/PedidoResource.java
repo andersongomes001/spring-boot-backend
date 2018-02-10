@@ -1,8 +1,6 @@
 package eti.andersongomes.cursomc.resources;
 
-import eti.andersongomes.cursomc.domain.Cliente;
 import eti.andersongomes.cursomc.domain.Pedido;
-import eti.andersongomes.cursomc.services.ClienteService;
 import eti.andersongomes.cursomc.services.PedidoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -19,8 +17,8 @@ public class PedidoResource {
     private PedidoService service;
 
     @RequestMapping(value ="/{id}", method = RequestMethod.GET)
-    public ResponseEntity<?> find(@PathVariable Integer id){
-        Pedido pedido = service.buscar(id);
+    public ResponseEntity<Pedido> find(@PathVariable Integer id){
+        Pedido pedido = service.find(id);
         return ResponseEntity.ok().body(pedido);
     }
 }

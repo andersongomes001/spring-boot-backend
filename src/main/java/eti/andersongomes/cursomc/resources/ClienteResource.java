@@ -1,8 +1,6 @@
 package eti.andersongomes.cursomc.resources;
 
-import eti.andersongomes.cursomc.domain.Categoria;
 import eti.andersongomes.cursomc.domain.Cliente;
-import eti.andersongomes.cursomc.services.CategoriaService;
 import eti.andersongomes.cursomc.services.ClienteService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -19,8 +17,8 @@ public class ClienteResource {
     private ClienteService service;
 
     @RequestMapping(value ="/{id}", method = RequestMethod.GET)
-    public ResponseEntity<?> find(@PathVariable Integer id){
-        Cliente cliente = service.buscar(id);
+    public ResponseEntity<Cliente> find(@PathVariable Integer id){
+        Cliente cliente = service.find(id);
         return ResponseEntity.ok().body(cliente);
     }
 }
