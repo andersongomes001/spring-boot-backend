@@ -29,7 +29,7 @@ public class ClienteResource {
     public ResponseEntity<?> update(@Valid @RequestBody ClienteDTO clienteDTO, @PathVariable Integer id){
         Cliente cliente = service.fronDTO(clienteDTO);
         cliente.setId(id);
-        cliente = service.update(cliente);
+        service.update(cliente);
         return ResponseEntity.noContent().build();
     }
     @RequestMapping(value ="/{id}", method = RequestMethod.DELETE)
