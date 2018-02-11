@@ -1,6 +1,7 @@
 package eti.andersongomes.cursomc.services;
 
 import eti.andersongomes.cursomc.domain.Categoria;
+import eti.andersongomes.cursomc.dto.CategoriaDTO;
 import eti.andersongomes.cursomc.repositories.CategoriaRepository;
 import eti.andersongomes.cursomc.services.exceptions.DataIntegrityException;
 import eti.andersongomes.cursomc.services.exceptions.ObjectNotFoundException;
@@ -54,5 +55,8 @@ public class CategoriaService {
     public Page<Categoria> findPage(Integer page, Integer linesPerPage, String orderBy, String direction){
         PageRequest pageRequest = new PageRequest(page,linesPerPage, Sort.Direction.valueOf(direction), orderBy);
         return repo.findAll(pageRequest);
+    }
+    public Categoria fronDTO(CategoriaDTO categoriaDTO){
+        return new Categoria(categoriaDTO.getId(), categoriaDTO.getNome());
     }
 }
