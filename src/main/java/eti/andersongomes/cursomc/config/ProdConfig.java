@@ -20,9 +20,7 @@ public class ProdConfig {
     @Value("${spring.jpa.hibernate.ddl-auto}")
     private String  strategy;
 
-    @Bean
-    @ConfigurationProperties(prefix = "spring.datasource")
-    boolean instantiateDataBase() throws ParseException {
+    @Bean boolean instantiateDataBase() throws ParseException {
         if(!"create".equals(strategy)){
             return false;
         }
