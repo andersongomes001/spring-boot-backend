@@ -1,6 +1,9 @@
 package eti.andersongomes.cursomc.config;
 
 import eti.andersongomes.cursomc.services.DBService;
+import eti.andersongomes.cursomc.services.EmailService;
+import eti.andersongomes.cursomc.services.MockEmailService;
+import eti.andersongomes.cursomc.services.SmtpEmailService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
@@ -25,6 +28,10 @@ public class DevConfig {
         }
         dbService.instantiateTestDatabase();
         return true;
+    }
+    @Bean
+    public EmailService emailService(){
+        return new SmtpEmailService();
     }
 }
 
