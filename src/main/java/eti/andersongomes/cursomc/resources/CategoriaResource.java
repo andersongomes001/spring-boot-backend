@@ -26,6 +26,7 @@ public class CategoriaResource {
         Categoria categoria = service.find(id);
         return ResponseEntity.ok().body(categoria);
     }
+
     @RequestMapping(method = RequestMethod.POST)
     public ResponseEntity<?> insert(@Valid @RequestBody CategoriaDTO categoriaDto){
         Categoria categoria = service.fronDTO(categoriaDto);
@@ -37,6 +38,7 @@ public class CategoriaResource {
                 .toUri();
         return ResponseEntity.created(uri).build();
     }
+
     @RequestMapping(value ="/{id}", method = RequestMethod.PUT)
     public ResponseEntity<?> update(@Valid @RequestBody CategoriaDTO categoriaDTO, @PathVariable Integer id){
         Categoria categoria = service.fronDTO(categoriaDTO);
@@ -44,11 +46,13 @@ public class CategoriaResource {
         categoria = service.update(categoria);
         return ResponseEntity.noContent().build();
     }
+
     @RequestMapping(value ="/{id}", method = RequestMethod.DELETE)
     public ResponseEntity<?> delete(@PathVariable Integer id){
         service.delete(id);
         return ResponseEntity.noContent().build();
     }
+
     @RequestMapping(method = RequestMethod.GET)
     public ResponseEntity<List<CategoriaDTO>> findAll(){
         List<Categoria> list = service.findAll();
@@ -59,6 +63,7 @@ public class CategoriaResource {
                 ).collect(Collectors.toList());
         return ResponseEntity.ok().body(listDto);
     }
+
     @RequestMapping(value = "/page",method = RequestMethod.GET)
     public ResponseEntity<Page<CategoriaDTO>> findPage(
             @RequestParam(value = "page", defaultValue = "0") Integer page,
