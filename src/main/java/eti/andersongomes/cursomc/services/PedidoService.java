@@ -3,8 +3,13 @@ package eti.andersongomes.cursomc.services;
 import eti.andersongomes.cursomc.domain.*;
 import eti.andersongomes.cursomc.domain.enums.EstadoPagamento;
 import eti.andersongomes.cursomc.repositories.*;
+import eti.andersongomes.cursomc.security.UserSS;
+import eti.andersongomes.cursomc.services.exceptions.AuthorizationException;
 import eti.andersongomes.cursomc.services.exceptions.ObjectNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
@@ -64,5 +69,14 @@ public class PedidoService {
         itemPedidoRepository.save(pedido.getItens());
         emailService.sendOrderConfimationEmail(pedido);
         return pedido;
+    }
+
+    public Page<Pedido> findPage(Integer page, Integer linesPerPage, String orderBy, String direction){
+        UserSS userSS = UserService.authenticated();
+        if(userSS == null) throw new AuthorizationException("Acesso negado");
+
+        Cliente cliente = clienteRepository.findOne(userSS.getId());
+        PageRequest pageRequest = new PageRequest(page,linesPerPage, Sort.Direction.valueOf(direction), orderBy);
+        return repo.findByCliente(cliente, pageRequest);
     }
 }
