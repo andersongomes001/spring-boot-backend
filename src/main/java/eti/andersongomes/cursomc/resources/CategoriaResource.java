@@ -6,6 +6,7 @@ import eti.andersongomes.cursomc.services.CategoriaService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
@@ -27,6 +28,7 @@ public class CategoriaResource {
         return ResponseEntity.ok().body(categoria);
     }
 
+    @PreAuthorize("hasAnyRole('ADMIN')")
     @RequestMapping(method = RequestMethod.POST)
     public ResponseEntity<?> insert(@Valid @RequestBody CategoriaDTO categoriaDto){
         Categoria categoria = service.fronDTO(categoriaDto);
@@ -38,7 +40,7 @@ public class CategoriaResource {
                 .toUri();
         return ResponseEntity.created(uri).build();
     }
-
+    @PreAuthorize("hasAnyRole('ADMIN')")
     @RequestMapping(value ="/{id}", method = RequestMethod.PUT)
     public ResponseEntity<?> update(@Valid @RequestBody CategoriaDTO categoriaDTO, @PathVariable Integer id){
         Categoria categoria = service.fronDTO(categoriaDTO);
@@ -46,7 +48,7 @@ public class CategoriaResource {
         categoria = service.update(categoria);
         return ResponseEntity.noContent().build();
     }
-
+    @PreAuthorize("hasAnyRole('ADMIN')")
     @RequestMapping(value ="/{id}", method = RequestMethod.DELETE)
     public ResponseEntity<?> delete(@PathVariable Integer id){
         service.delete(id);
