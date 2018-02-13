@@ -4,6 +4,7 @@ import eti.andersongomes.cursomc.domain.Categoria;
 import eti.andersongomes.cursomc.domain.Cidade;
 import eti.andersongomes.cursomc.domain.Cliente;
 import eti.andersongomes.cursomc.domain.Endereco;
+import eti.andersongomes.cursomc.domain.enums.Perfil;
 import eti.andersongomes.cursomc.domain.enums.TipoCliente;
 import eti.andersongomes.cursomc.dto.CategoriaDTO;
 import eti.andersongomes.cursomc.dto.ClienteDTO;
@@ -11,6 +12,8 @@ import eti.andersongomes.cursomc.dto.ClienteNewDTO;
 import eti.andersongomes.cursomc.repositories.CidadeRepository;
 import eti.andersongomes.cursomc.repositories.ClienteRepository;
 import eti.andersongomes.cursomc.repositories.EnderecoRepository;
+import eti.andersongomes.cursomc.security.UserSS;
+import eti.andersongomes.cursomc.services.exceptions.AuthorizationException;
 import eti.andersongomes.cursomc.services.exceptions.DataIntegrityException;
 import eti.andersongomes.cursomc.services.exceptions.ObjectNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,6 +39,10 @@ public class ClienteService {
     private BCryptPasswordEncoder pe;
 
     public Cliente find(Integer id){
+        UserSS userSS = UserService.authenticated();
+        if(userSS == null || !userSS.hasRole(Perfil.ADMIN) && !id.equals(userSS.getId())){
+            throw new AuthorizationException("Acesso negado");
+        }
         Cliente cliente = repo.findOne(id);
         if(cliente == null){
             throw new ObjectNotFoundException("Objeto não encontrador! Id: "+id +", TIPO:"+Cliente.class.getName()  );

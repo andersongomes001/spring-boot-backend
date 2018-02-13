@@ -1,5 +1,6 @@
 package eti.andersongomes.cursomc.resources.exception;
 
+import eti.andersongomes.cursomc.services.exceptions.AuthorizationException;
 import eti.andersongomes.cursomc.services.exceptions.DataIntegrityException;
 import eti.andersongomes.cursomc.services.exceptions.ObjectNotFoundException;
 import org.springframework.http.HttpStatus;
@@ -30,5 +31,10 @@ public class ResourceExceptionHandler {
             erro.addError(x.getField(), x.getDefaultMessage());
         }
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(erro);
+    }
+    @ExceptionHandler(AuthorizationException.class)
+    public ResponseEntity<StandardError> authorization(AuthorizationException e, HttpServletRequest request){
+        StandardError erro = new StandardError(HttpStatus.FORBIDDEN.value(), e.getMessage(), System.currentTimeMillis());
+        return ResponseEntity.status(HttpStatus.FORBIDDEN).body(erro);
     }
 }
