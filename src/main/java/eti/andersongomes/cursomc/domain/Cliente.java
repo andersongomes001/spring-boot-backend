@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import eti.andersongomes.cursomc.domain.enums.Perfil;
 import eti.andersongomes.cursomc.domain.enums.TipoCliente;
+import org.springframework.beans.factory.annotation.Value;
 
 import javax.persistence.*;
 import java.io.Serializable;
