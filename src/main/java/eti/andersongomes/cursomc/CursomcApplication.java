@@ -11,8 +11,6 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
 public class CursomcApplication implements CommandLineRunner {
-	@Autowired
-	private S3Service s3Service;
 
 	public static void main(String[] args) {
 		SpringApplication.run(CursomcApplication.class, args);
@@ -20,6 +18,5 @@ public class CursomcApplication implements CommandLineRunner {
 
 	@Override
 	public void run(String... strings) throws Exception {
-		s3Service.uploadFile("/home/anderson/Modelos/cursomc/src/main/java/eti/andersongomes/cursomc/danied.png");
 	}
 }
