@@ -88,4 +88,10 @@ public class ClienteResource {
         URI uri = service.uploadProfilePicture(file);
         return ResponseEntity.created(uri).build();
     }
+
+    @RequestMapping(value = "/email",method = RequestMethod.GET)
+    public ResponseEntity<ClienteDTO> find(@RequestParam(value = "value") String email){
+        Cliente cliente = service.findByEmail(email);
+        return ResponseEntity.ok().body(new ClienteDTO(cliente));
+    }
 }
